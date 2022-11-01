@@ -30,15 +30,21 @@ def registerpage(request):
             return redirect('loginpage')
     return render(request, 'todo/register.html',{'form':form})
 
+def logoutuser(request):
+    logout(request)
+    return redirect('loginpage')
 
-def func(request):
-    lists =List.objects.filter(Userr=request.user)
-    form = apply()
+def func(request):   
+    form=apply() 
     if request.method == 'POST':
         form = apply(request.POST)  
         if form.is_valid():
-            form.save()
-    return render(request, 'todo/first.html',{'lists': lists , 'form': form})          
+            form.save()       
+    return render(request, 'todo/first.html',{'form': form})      
+
+def showlist(request):
+    lists =List.objects.filter(user=request.user)
+    return render(request, 'todo/list.html',{'lists':lists})    
 
 def deletestuff(request, pk):
     lol=List.objects.get(id=pk)

@@ -1,0 +1,7 @@
+<h2>{{request.user}}, this is your to-do list</h2>
+<hr>
+{% for lists in lists %}            
+<p>{{lists}}</p>
+<a href="{% url 'deletestuff' lists.id%}">Delete</a>    
+<a href="{% url 'updatestuff' lists.id%}">Update</a>    
+{% endfor %}        
