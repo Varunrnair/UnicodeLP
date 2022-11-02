@@ -7,7 +7,7 @@ from django.contrib import messages
 
 def loginpage(request):
     if request.method=='POST':
-        username=request.POST.get('username')
+        username=request.POST.get('user_name')
         password=request.POST.get('password')
         user=authenticate(request, username=username, password=password)
         if user is not None:
@@ -25,7 +25,7 @@ def registerpage(request):
         form= userform(request.POST)
         if form.is_valid():
             form.save()
-            user=form.cleaned_data.get('username')
+            user=form.cleaned_data.get('email')
             messages.success(request,'successfully registered new user',user)
             return redirect('loginpage')
     return render(request, 'todo/register.html',{'form':form})
