@@ -7,9 +7,10 @@ from django.contrib import messages
 
 def loginpage(request):
     if request.method=='POST':
-        username=request.POST.get('user_name')
+        email=request.POST.get('email')
         password=request.POST.get('password')
-        user=authenticate(request, username=username, password=password)
+        user=authenticate(request, email=email, password=password)
+        print(user,email)
         if user is not None:
             login(request,user)
             return redirect('func')
@@ -22,12 +23,16 @@ def loginpage(request):
 def registerpage(request):
     form= userform()
     if request.method=="POST":
+        print("Entered")
         form= userform(request.POST)
+        print(form)
+        print(form.is_valid())
         if form.is_valid():
             form.save()
             user=form.cleaned_data.get('email')
             messages.success(request,'successfully registered new user',user)
             return redirect('loginpage')
+        print(form.errors)
     return render(request, 'todo/register.html',{'form':form})
 
 def logoutuser(request):
@@ -39,7 +44,7 @@ def func(request):
     if request.method == 'POST':
         form = apply(request.POST)  
         if form.is_valid():
-            form.save()       
+            form.save()
     return render(request, 'todo/first.html',{'form': form})      
 
 def showlist(request):
