@@ -4,6 +4,8 @@ from .forms import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required , user_passes_test
+
 
 def loginpage(request):
     if request.method=='POST':
@@ -39,18 +41,21 @@ def logoutuser(request):
     logout(request)
     return redirect('loginpage')
 
+@login_required(login_url='loginpage')
 def func(request):   
     form=apply() 
     if request.method == 'POST':
         form = apply(request.POST)  
         if form.is_valid():
             form.save()
-    return render(request, 'todo/first.html',{'form': form})      
-
+    return render(request, 'todo/first.html',{'form': form})     
+ 
+@login_required(login_url='loginpage')
 def showlist(request):
     lists =List.objects.filter(user=request.user)
     return render(request, 'todo/list.html',{'lists':lists})    
 
+@login_required(login_url='loginpage')
 def deletestuff(request, pk):
     lol=List.objects.get(id=pk)
     if request.method == 'POST':
@@ -58,6 +63,7 @@ def deletestuff(request, pk):
         return redirect('func')
     return render(request, 'todo/delete.html',{'lol':lol} )
 
+@login_required(login_url='loginpage')
 def updatestuff(request ,pk):
     lol =List.objects.get(id=pk)
     form=apply(instance = lol)
