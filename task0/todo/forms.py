@@ -8,6 +8,7 @@ class apply(ModelForm):
     class Meta:
         model = List
         fields = ['title','desc','Complete','Category']
+        #fields = '__all__'
 
 class userform(UserCreationForm):
     class Meta:

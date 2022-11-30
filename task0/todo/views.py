@@ -43,11 +43,14 @@ def logoutuser(request):
 
 @login_required(login_url='loginpage')
 def func(request):   
-    form=apply() 
+    user =request.user
+    form = apply()
     if request.method == 'POST':
-        form = apply(request.POST)  
+        form = apply(request.POST)
+        form.instance.user = request.user
         if form.is_valid():
             form.save()
+            print(form.data)
     return render(request, 'todo/first.html',{'form': form})     
  
 @login_required(login_url='loginpage')

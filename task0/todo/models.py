@@ -8,7 +8,7 @@ class List(models.Model):
     desc=models.TextField(max_length=200 ,default="")
     Complete=models.BooleanField(default=False)
     date_created=models.DateTimeField(auto_now_add=True,null=True)
-    user=models.ForeignKey(settings.AUTH_USER_MODEL, default='1', on_delete=models.CASCADE)
+    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     def __str__(self):
         return self.title
 
